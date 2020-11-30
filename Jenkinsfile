@@ -17,7 +17,7 @@ pipeline {
 
       }
       steps {
-        sh '/opt/apache-maven-3.6.3/bin/mvn pmd:pmd'
+        sh '/opt/apache-maven-3.6.3/bin/mvn -P metrics pmd:pmd'
       }
     }
 
