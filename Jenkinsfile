@@ -9,18 +9,6 @@ pipeline {
       }
     }
 
-    stage('codereview-pmd') {
-      post {
-        success {
-          recordIssues enabledForFailure: true, tool: pmdParser(pattern: '**/target/pmd.xml')
-        }
-
-      }
-      steps {
-        sh '/opt/apache-maven-3.6.3/bin/mvn -P metrics pmd:pmd'
-      }
-    }
-
     stage('unit-test') {
       post {
         success {
