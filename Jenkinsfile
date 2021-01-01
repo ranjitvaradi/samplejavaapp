@@ -8,17 +8,15 @@ pipeline {
         sleep 10
       }
     }
-    stage('codereview-pmd') {
-			              steps {
-            echo 'codereview..'
-				bat label: '', script: 'mvn -Pmetricspmd:pmd'
-            }
-			 post {
-                success {
-                    pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/pmd.xml', unHealthy: ''
-                }
-            }
-			
+    stage('SonarQube analysis') {
+         
+          steps{
+                echo "Sonar Scanner"
+                  sh "mvn clean compile"
+               withSonarQubeEnv('sonar-7') { 
+                 sh "mvn sonar:sonar "
+                }                     
+          }
     }
     stage('unit-test') {
       post {
