@@ -3,21 +3,24 @@ pipeline {
   stages {
     stage('compile') {
       steps {
-        git 'https://github.com/ranjitvaradi/samplejavaapp.git'
+        git 'https://github.com/lerndevops/samplejavaapp.git'
         sh '/opt/apache-maven-3.6.3/bin/mvn compile'
         sleep 10
       }
     }
-    stage('SonarQube analysis') {
-         
-          steps{
-                echo "Sonar Scanner"
-                  sh "mvn clean compile"
-               withSonarQubeEnv('sonar-7') { 
-                 sh "mvn sonar:sonar "
-                }                     
-          }
+
+    stage('codereview-pmd') {
+      post {
+        success {
+          pmd(canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/pmd.xml', unHealthy: '')
+        }
+
+      }
+      steps {
+        sh '/opt/apache-maven-3.6.3/bin/mvn pmd:pmd'
+      }
     }
+
     stage('unit-test') {
       post {
         success {
