@@ -17,4 +17,4 @@
     - name: increase replicas 
       command: kubectl scale deploy myapp --replicas=2
     - name: deploy service
-      command: kubectl expose deploy myapp --name myapp-svc --port 8084 --type NodePort
+      command: kubectl expose deploy myapp --name myapp-svc --port 8080 --type NodePort
