@@ -10,12 +10,7 @@ pipeline {
     }
 
     stage('codereview-pmd') {
-      post {
-        success {
-          recordIssues(tools: [pmdParser(pattern: '**/pmd.xml')])
-        }
-
-      }
+      
       steps {
         sh '/opt/apache-maven-3.6.3/bin/mvn -P metrics pmd:pmd'
       }
